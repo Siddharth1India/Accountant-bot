@@ -1,0 +1,25 @@
+body{
+    background-color: #e0e0e0;
+    font-family: 'Roboto', sans-serif;
+    width: 80%;
+    margin: 0 auto;
+}
+h1{
+    text-align: center;
+}
+h2{
+    text-align: right;
+}
+h3{
+    text-decoration: underline;
+    font-size: 22px;
+}
+img{
+    width: 100%;
+}
+a{
+    color: blue;
+}
+a:visited{
+    color:blue;
+}

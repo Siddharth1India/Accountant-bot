@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet">
+    <title>Accountant bot design</title>
+</head>
+<body>
+    <h1>Accountant bot - System design</h1>
+    <h2>- Siddharth Patel</h2>
+    <img src="./static/accountant bot.png" alt="System Design" srcset="">
+    <p style="text-align: center; text-decoration: underline;">Figure 1: Created by Siddharth</p>
+    <div class="prob">
+        <h3>Problem:</h3>
+        <p>Creating LLM based intelligent chatbot which can:</p>
+        <ul>
+            <li>
+                Understand query in natural language
+            </li>
+            <li>
+                Map user query to appropriate API route by understanding API docs
+            </li>
+            <li>
+                Create JSON response for API parameters from user input
+            </li>
+            <li>
+                Represent answer in natural language which can be understood by user
+            </li>
+        </ul>
+    </div>
+    <div class="sol">
+        <h3>Solution and components</h3>
+        <ul>
+            <li>
+                API docs map will provide information of pages of doc site. System crawl data as per sitemap.
+            </li>
+            <br>
+            <li>
+                As each LLM has specific <code>context length</code>, we need to divide each page data to chunks of length less than or equal to context length.
+                <br>
+                <q>Note: <a href="https://en.wikipedia.org/wiki/Large_language_model#Context_window" target="_blank"> Context length </a> is longest possible sequence of token an LLM can use to generate token.</q> 
+            </li><br>
+            <li>
+                Each of these data chunks will be converted to <code>embeddings</code> with LLM (usually OpenAI's embedding API). 
+                <br>
+                <q>Note: <a href="https://en.wikipedia.org/wiki/Word_embedding" target="_blank"> Embedding</a> is process used in NLP to convert word/sentence to vector of numeric values. It is useful for sementic search as process happenes usually by finding distance.</q>
+            </li><br>
+            <li>
+                Embedings are stored in <code>vector database</code> (vector database is simple storage and same can be achieved by storing data into <code>numpy array</code> too. Options are using <code>FAISS</code> or <code>PineCone</code> like vector database or directly using numpy array). <br>
+                <q>Note: <a href="https://modelz.medium.com/do-we-really-need-a-specialized-vector-database-b61170e3bfc8" target="_blank"> Vector database </a> is faster. Although for smaller database size, difference between vector database and numpy array is very small, it is standard practice to store data in database. As LLM response are slow, few ms delay by NumPy array does not create any issue and hence can be used if needed.</q>
+            </li><br>
+            <li>
+                User query is converted into vector and compared with database vectors, LLM decide which API call to make.
+            </li><br>
+            <li>
+                GPT's <code>function call</code> method is created especially to get parameter values from natural language, that will be used to create <code>JSON object</code> for API and data will be given to API.
+            </li><br>
+            <li>
+                API response will be framed to natural language via LLM and given to frontend.
+            </li>
+        </ul>
+    </div>
+    <div class="resources">
+        <h3>Resources:</h3>
+        <ol>
+            <li>
+                <a href="https://en.wikipedia.org/wiki/Large_language_model#Context_window">Context Window</a>
+            </li>
+            <li>
+                <a href="https://en.wikipedia.org/wiki/Word_embedding">Word Embedding</a>
+            </li>
+            <li>
+                <a href="https://modelz.medium.com/do-we-really-need-a-specialized-vector-database-b61170e3bfc8">Vector Database</a>
+            </li>
+            <li>
+                <a href="https://platform.openai.com/docs/guides/gpt/function-calling">Function calling via GPT</a>
+            </li>
+        </ol>
+    </div>
+    <br>
+    Note: If found error, please <a href="mailto:siddharth2000patel@gmail.com">Mail me.</a>
+    <br><br>
+</body>
+</html>
